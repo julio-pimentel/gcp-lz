@@ -1,0 +1,53 @@
+#build {
+ #    step {
+ #    name       = "node" 
+ #    entrypoint = "npm"
+ #    args       = ["install"]
+ #    }
+ #    step{...}
+ #    ...
+ #  }
+
+
+ steps:
+- id: "init"
+  name: "hashicorp/terraform:0.14.2"
+  entrypoint: "/bin/sh"
+  args:
+  - -c
+  - |
+    sh terraform-util.sh get;
+    sh terraform-util.sh init;
+  env:
+  - 'project_id=${PROJECT_ID}'
+
+- id: "validate"
+  name: "hashicorp/terraform:0.14.2"
+  entrypoint: "/bin/sh"
+  args:
+  - -c
+  - |
+    sh terraform-util.sh validate;
+  env:
+  - 'project_id=${PROJECT_ID}'
+
+- id: "plan"
+  name: "hashicorp/terraform:0.14.2"
+  entrypoint: "/bin/sh"
+  args:
+  - -c
+  - |
+    sh terraform-util.sh plan;
+  env:
+  - 'project_id=${PROJECT_ID}'
+
+- id: "apply"
+  name: "hashicorp/terraform:0.14.2"
+  entrypoint: "/bin/sh"
+  args:
+  - -c
+  - |
+    sh terraform-util.sh apply;
+  env:
+  - 'project_id=${PROJECT_ID}'
+  
